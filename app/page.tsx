@@ -1,9 +1,10 @@
 import Link from "next/link";
 import {
-  Building2, Landmark, Heart, FileText, ShieldCheck, Star,
+  Building2, Landmark, Heart, FileText, ShieldCheck,
   ArrowRight, CheckCircle2, Phone, ClipboardList, Award,
-  Users, TrendingUp, Clock, BadgeCheck, ChevronRight,
+  Users, TrendingUp, Clock, BadgeCheck, ChevronRight, Sparkles,
 } from "lucide-react";
+import clsx from "clsx";
 import { navSections } from "@/lib/nav-data";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/contact";
 import WhatsAppLink from "@/components/WhatsAppLink";
@@ -16,7 +17,7 @@ const services = [
   { icon: ShieldCheck, title: "Trademark Registration", desc: "Protect your brand identity with trademark registration.", href: "/registration/trademark", color: "bg-orange-50 text-orange-700" },
   { icon: ClipboardList, title: "ITR Filing", desc: "File your Income Tax Returns accurately and on time.", href: "/filing/itr-filing", color: "bg-teal-50 text-teal-700" },
   { icon: Award, title: "MSME Registration", desc: "Access government benefits by registering as an MSME.", href: "/license/msme", color: "bg-yellow-50 text-yellow-700" },
-  { icon: Star, title: "Complete Value Package", desc: "All-in-one compliance package at the best price.", href: "/packages/complete-value-package", color: "bg-red-50 text-red-700" },
+  { icon: Sparkles, title: "Complete Value Package", desc: "All-in-one compliance package at the best price.", href: "/packages/complete-value-package", color: "bg-red-50 text-red-700" },
 ];
 
 const stats = [
@@ -40,11 +41,70 @@ const process = [
   { step: "04", title: "Deliver", desc: "Receive your certificates, registrations, or filings directly." },
 ];
 
-const testimonials = [
-  { name: "Rahul Sharma", role: "Startup Founder", text: "ComplyBridge made our company registration process so smooth. Highly professional team!" },
-  { name: "Priya Mehta", role: "E-commerce Business Owner", text: "Got our GST registration done in record time. Excellent service and very responsive." },
-  { name: "Amit Verma", role: "NGO Director", text: "Their expertise in NGO registration helped us start our social work without delays." },
-  { name: "Sneha Kapoor", role: "Restaurant Owner", text: "FSSAI license obtained hassle-free. The team was very professional throughout." },
+const pricingPlans = [
+  {
+    title: "ITR Filing",
+    price: "₹499",
+    priceNote: "onwards",
+    desc: "Expert income tax return filing with maximum deductions and timely refunds.",
+    href: "/filing/itr-filing",
+    icon: ClipboardList,
+    color: "bg-teal-50 text-teal-700",
+    features: ["All ITR forms (ITR-1 to ITR-7)", "Form 26AS reconciliation", "Refund tracking support"],
+    featured: true,
+    badge: "Most Popular",
+  },
+  {
+    title: "GST Registration",
+    price: "₹1,499",
+    priceNote: "onwards",
+    desc: "Get your GSTIN and start compliant business operations quickly.",
+    href: "/registration/gst",
+    icon: FileText,
+    color: "bg-green-50 text-green-700",
+    features: ["GSTIN certificate", "ARN tracking", "Expert CA support"],
+  },
+  {
+    title: "Company Registration",
+    price: "₹6,999",
+    priceNote: "onwards",
+    desc: "Private Limited, OPC, or Public Ltd incorporation end-to-end.",
+    href: "/registration/company",
+    icon: Building2,
+    color: "bg-blue-50 text-blue-700",
+    features: ["DIN & DSC assistance", "Name reservation", "Certificate of Incorporation"],
+  },
+  {
+    title: "MSME Registration",
+    price: "₹999",
+    priceNote: "onwards",
+    desc: "Unlock government schemes and benefits for your business.",
+    href: "/license/msme",
+    icon: Award,
+    color: "bg-yellow-50 text-yellow-700",
+    features: ["Udyam registration", "Priority sector benefits", "Collateral-free loans"],
+  },
+  {
+    title: "LLP Registration",
+    price: "₹4,999",
+    priceNote: "onwards",
+    desc: "Register your LLP with complete documentation support.",
+    href: "/registration/llp",
+    icon: Landmark,
+    color: "bg-purple-50 text-purple-700",
+    features: ["DPIN for partners", "LLP agreement", "PAN & TAN"],
+  },
+  {
+    title: "Complete Value Package",
+    price: "₹24,999",
+    priceNote: "/ year",
+    desc: "All-in-one compliance bundle — incorporation, GST, ITR, TDS & ROC.",
+    href: "/packages/complete-value-package",
+    icon: ShieldCheck,
+    color: "bg-red-50 text-red-700",
+    features: ["Company incorporation", "GST & ITR filing", "ROC annual compliance"],
+    badge: "Best Value",
+  },
 ];
 
 export default function HomePage() {
@@ -251,28 +311,80 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Pricing */}
       <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-green-600 font-semibold text-sm uppercase tracking-wider">Testimonials</span>
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#112740] mt-2">What Our Clients Say</h2>
+            <span className="text-green-600 font-semibold text-sm uppercase tracking-wider">Transparent Pricing</span>
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#112740] mt-2">Affordable Compliance Plans</h2>
+            <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
+              Clear, upfront pricing with no hidden fees. Start from just ₹499 for ITR filing.
+            </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {testimonials.map(({ name, role, text }) => (
-              <div key={name} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <div className="flex gap-0.5 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={14} className="text-yellow-400 fill-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">&ldquo;{text}&rdquo;</p>
-                <div>
-                  <p className="font-semibold text-[#112740] text-sm">{name}</p>
-                  <p className="text-gray-400 text-xs">{role}</p>
-                </div>
-              </div>
-            ))}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+            {pricingPlans.map(
+              ({ title, price, priceNote, desc, href, icon: Icon, color, features, featured, badge }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={clsx(
+                    "group relative flex flex-col rounded-2xl bg-white p-6 sm:p-7 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-xl",
+                    featured
+                      ? "border-2 border-green-500 ring-4 ring-green-500/10 sm:col-span-2 xl:col-span-1"
+                      : "border border-gray-100 hover:border-green-300"
+                  )}
+                >
+                  {badge && (
+                    <span
+                      className={clsx(
+                        "absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap",
+                        featured ? "bg-green-600 text-white" : "bg-[#112740] text-white"
+                      )}
+                    >
+                      {featured && <Sparkles size={12} />}
+                      {badge}
+                    </span>
+                  )}
+
+                  <div className={clsx("w-12 h-12 rounded-xl flex items-center justify-center mb-4", color)}>
+                    <Icon size={22} />
+                  </div>
+
+                  <h3 className="font-bold text-[#112740] text-lg mb-1 group-hover:text-green-600 transition-colors">
+                    {title}
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed mb-5 flex-1">{desc}</p>
+
+                  <div className="mb-5">
+                    <span className="text-3xl sm:text-4xl font-bold text-[#112740]">{price}</span>
+                    <span className="text-gray-500 text-sm ml-1">{priceNote}</span>
+                  </div>
+
+                  <ul className="space-y-2 mb-6">
+                    {features.map((f) => (
+                      <li key={f} className="flex items-start gap-2 text-sm text-gray-600">
+                        <CheckCircle2 size={15} className="text-green-500 shrink-0 mt-0.5" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <span className="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-semibold transition-colors bg-gray-50 text-[#112740] group-hover:bg-green-600 group-hover:text-white">
+                    Get Started <ArrowRight size={15} />
+                  </span>
+                </Link>
+              )
+            )}
+          </div>
+
+          <div className="text-center mt-10">
+            <Link
+              href="/packages"
+              className="inline-flex items-center gap-2 border-2 border-[#112740] text-[#112740] hover:bg-[#112740] hover:text-white font-semibold px-6 py-3 rounded-xl transition-colors"
+            >
+              View All Packages <ArrowRight size={16} />
+            </Link>
           </div>
         </div>
       </section>

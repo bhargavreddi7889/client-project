@@ -74,9 +74,7 @@ export const navSections: NavSection[] = [
 
 export const topLinks = [
   { label: "About Us", href: "/about" },
-  { label: "Blog", href: "/blog" },
   { label: "Contact Us", href: "/contact" },
 ];
 
-/** Shown in the main navbar (Blog is footer quick links only). */
-export const navbarLinks = topLinks.filter((l) => l.href !== "/blog");
+export const navbarLinks = topLinks;

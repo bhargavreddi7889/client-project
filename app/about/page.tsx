@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CheckCircle2, Users, Award, Target, Heart, ArrowRight, MapPin, Phone, Mail } from "lucide-react";
+import { CheckCircle2, Award, Target, Heart, ArrowRight, MapPin, Phone, Mail } from "lucide-react";
 import { PHONE_DISPLAY, PHONE_TEL, EMAIL, EMAIL_MAILTO } from "@/lib/contact";
 import WhatsAppLink from "@/components/WhatsAppLink";
 import type { Metadata } from "next";
@@ -13,13 +13,6 @@ const values = [
   { icon: Target, title: "Our Mission", desc: "To simplify compliance for every Indian business — making legal, tax, and regulatory processes accessible, affordable, and stress-free." },
   { icon: Award, title: "Our Vision", desc: "To be India's most trusted compliance partner, empowering businesses of all sizes to grow without the burden of regulatory complexities." },
   { icon: Heart, title: "Our Values", desc: "Integrity, transparency, client-first approach, and continuous learning drive everything we do at ComplyBridge." },
-];
-
-const team = [
-  { name: "Adv. Priya Sharma", role: "Founder & Managing Partner", expertise: "Corporate Law & Compliance" },
-  { name: "CA Rohit Gupta", role: "Head of Tax Practice", expertise: "Income Tax & GST" },
-  { name: "CS Anita Verma", role: "Company Secretary", expertise: "ROC & MCA Compliance" },
-  { name: "Adv. Kiran Mehta", role: "Legal Counsel", expertise: "Trademark & IP Law" },
 ];
 
 const milestones = [
@@ -116,28 +109,6 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <span className="text-green-600 font-semibold text-sm uppercase tracking-wider">Leadership Team</span>
-            <h2 className="text-3xl font-bold text-[#112740] mt-2">Expert Professionals at Your Service</h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map(({ name, role, expertise }) => (
-              <div key={name} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#112740] to-[#1a3c5e] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users size={28} className="text-white" />
-                </div>
-                <h3 className="font-bold text-[#112740]">{name}</h3>
-                <p className="text-green-600 text-sm font-medium mt-1">{role}</p>
-                <p className="text-gray-500 text-xs mt-2">{expertise}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>

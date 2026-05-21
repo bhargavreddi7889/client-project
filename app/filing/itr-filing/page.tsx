@@ -14,7 +14,7 @@ export default function ITRFilingPage() {
       description="Filing your Income Tax Return (ITR) on time is not just a legal obligation but also helps you establish your income proof, claim refunds, and carry forward losses. ComplyBridge's team of expert CAs handles ITR filing for individuals (salaried, self-employed), firms, LLPs, and companies — ensuring maximum deductions and zero errors. We handle all ITR forms from ITR-1 to ITR-7."
       category="Filing"
       categoryHref="/filing"
-      price="₹999 onwards"
+      price="₹499 onwards"
       govtFee="NIL"
       timeframe="1–3 Working Days"
       keyBenefits={[

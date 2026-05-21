@@ -70,7 +70,6 @@ export default function Footer() {
             <ul className="space-y-2">
               {[
                 { label: "About Us", href: "/about" },
-                { label: "Blog", href: "/blog" },
                 { label: "Contact Us", href: "/contact" },
                 { label: "Privacy Policy", href: "/privacy-policy" },
                 { label: "Terms & Conditions", href: "/terms-and-conditions" },
