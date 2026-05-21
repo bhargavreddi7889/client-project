@@ -59,7 +59,7 @@ export default function SectionSidebarLayout({ section, children }: SectionSideb
 
             <nav
               id="section-topics-nav"
-              className={`${topicsOpen ? "block" : "hidden"} lg:block mt-3 lg:mt-0 lg:sticky lg:top-28 bg-[#f0f4f8] border border-gray-200 rounded-xl p-4 lg:p-5 shadow-sm`}
+              className={`${topicsOpen ? "block" : "hidden"} lg:block mt-3 lg:mt-0 lg:sticky lg:top-24 xl:top-[100px] bg-[#f0f4f8] border border-gray-200 rounded-xl p-4 lg:p-5 shadow-sm`}
               aria-label={`${section.label} topics`}
             >
               <h2 className="hidden lg:block text-[#112740] font-bold text-sm uppercase tracking-wide mb-4 pb-3 border-b-2 border-green-600">

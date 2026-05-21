@@ -9,21 +9,24 @@ export default function Footer() {
   return (
     <footer className="bg-[#112740] text-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
-          {/* Brand */}
-          <div className="sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="inline-block mb-4 rounded-lg bg-white px-3 py-2 shadow-sm">
-              <span className="relative block h-14 w-[180px]">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          {/* Brand — full width on mobile/tablet; single column on desktop */}
+          <div className="min-w-0 w-full md:col-span-2 lg:col-span-1">
+            <Link
+              href="/"
+              className="inline-block mb-4 rounded-lg bg-white px-3 py-2.5 shadow-sm w-full max-w-[300px] sm:max-w-[320px] lg:max-w-full lg:w-full"
+            >
+              <span className="relative block h-[72px] w-full sm:h-20 lg:h-[88px]">
                 <Image
                   src="/logo.png"
                   alt="ComplyBridge"
                   fill
-                  sizes="180px"
+                  sizes="(max-width: 1024px) 300px, 240px"
                   className="object-contain object-left"
                 />
               </span>
             </Link>
-            <p className="text-sm leading-relaxed text-gray-400 mb-4">
+            <p className="text-sm leading-relaxed text-gray-400 mb-4 max-w-md">
               ComplyBridge helps businesses navigate complex compliance requirements with ease. Your trusted partner for all legal, tax, and regulatory needs.
             </p>
             <div className="flex gap-3 mt-2">
@@ -34,7 +37,7 @@ export default function Footer() {
                 { label: "Instagram", href: "#", path: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" },
               ].map(({ label, href, path }) => (
                 <a key={label} href={href} aria-label={label} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-600 transition-colors">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d={path} />
                   </svg>
                 </a>
@@ -43,7 +46,7 @@ export default function Footer() {
           </div>
 
           {/* Services */}
-          <div>
+          <div className="min-w-0">
             <h3 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Our Services</h3>
             <ul className="space-y-2">
               {navSections.slice(0, 4).map((section) => (
@@ -62,7 +65,7 @@ export default function Footer() {
           </div>
 
           {/* Quick links */}
-          <div>
+          <div className="min-w-0">
             <h3 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Quick Links</h3>
             <ul className="space-y-2">
               {[
@@ -82,12 +85,12 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="min-w-0 md:col-span-2 lg:col-span-1">
             <h3 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-sm">
                 <Phone size={15} className="text-green-400 mt-0.5 shrink-0" />
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 min-w-0">
                   <a href={PHONE_TEL} className="hover:text-green-400 transition-colors">
                     {PHONE_DISPLAY}
                   </a>
