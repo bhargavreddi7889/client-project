@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { CheckCircle2, ArrowRight, Phone, Star } from "lucide-react";
+import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/contact";
+import WhatsAppLink from "@/components/WhatsAppLink";
 
 interface PackagePageProps {
   title: string;
@@ -39,13 +41,20 @@ export default function PackagePageTemplate({
               <h1 className="text-3xl lg:text-4xl font-bold mb-3">{title}</h1>
               <p className="text-green-300 text-lg mb-4">{subtitle}</p>
               <p className="text-gray-300 leading-relaxed">{description}</p>
-              <div className="flex flex-wrap gap-4 mt-6">
+              <div className="flex flex-wrap gap-3 mt-6">
                 <Link href="/contact" className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors">
                   Get This Package <ArrowRight size={16} />
                 </Link>
-                <a href="tel:9149023243" className="inline-flex items-center gap-2 bg-white/10 border border-white/20 hover:bg-white/20 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors">
-                  <Phone size={16} /> 9149023243
+                <a href={PHONE_TEL} className="inline-flex items-center gap-2 bg-white/10 border border-white/20 hover:bg-white/20 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors">
+                  <Phone size={16} /> {PHONE_DISPLAY}
                 </a>
+                <WhatsAppLink
+                  variant="outline-light"
+                  message={`Hi ComplyBridge, I am interested in the ${title} package.`}
+                  className="px-5 py-2.5"
+                >
+                  WhatsApp
+                </WhatsAppLink>
               </div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6">
@@ -130,13 +139,20 @@ export default function PackagePageTemplate({
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
           <h2 className="text-2xl lg:text-3xl font-bold mb-3">Ready to Get Started with {title}?</h2>
           <p className="text-green-100 mb-6">Contact our team today and get this package activated within 24 hours.</p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
             <Link href="/contact" className="bg-white text-green-700 font-bold px-8 py-3 rounded-xl hover:bg-green-50 transition-colors inline-flex items-center gap-2">
               Get This Package <ArrowRight size={16} />
             </Link>
-            <a href="tel:9149023243" className="bg-white/20 border border-white/40 text-white font-semibold px-8 py-3 rounded-xl hover:bg-white/30 transition-colors inline-flex items-center gap-2">
-              <Phone size={16} /> Call: 9149023243
+            <a href={PHONE_TEL} className="bg-white/20 border border-white/40 text-white font-semibold px-8 py-3 rounded-xl hover:bg-white/30 transition-colors inline-flex items-center gap-2">
+              <Phone size={16} /> Call: {PHONE_DISPLAY}
             </a>
+            <WhatsAppLink
+              variant="button"
+              message={`Hi ComplyBridge, I would like to get the ${title} package.`}
+              className="px-8 py-3"
+            >
+              WhatsApp
+            </WhatsAppLink>
           </div>
         </div>
       </section>

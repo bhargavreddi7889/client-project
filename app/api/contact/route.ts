@@ -13,6 +13,9 @@ export async function POST(req: NextRequest) {
     }
 
     const resend = new Resend(apiKey);
+    const fromEmail =
+      process.env.RESEND_FROM_EMAIL || "ComplyBridge <onboarding@resend.dev>";
+    const toEmail = process.env.CONTACT_TO_EMAIL || "info@complybridge.in";
 
     const { name, email, phone, service, message } = await req.json();
 
@@ -20,9 +23,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Please fill in all required fields." }, { status: 400 });
     }
 
-    const { error } = await resend.emails.send({
-      from: "ComplyBridge Website <no-reply@complybridge.in>",
-      to: ["info@complybridge.in"],
+    const { data, error } = await resend.emails.send({
+      from: fromEmail,
+      to: [toEmail],
       replyTo: email,
       subject: `New Enquiry from ${name} – ${service || "General"}`,
       html: `
@@ -44,10 +47,14 @@ export async function POST(req: NextRequest) {
                 <td style="padding: 10px 0; color: #6b7280; font-size: 14px;">Phone</td>
                 <td style="padding: 10px 0; font-weight: 600; color: #111827;"><a href="tel:${phone}" style="color: #16a34a;">${phone}</a></td>
               </tr>
-              ${service ? `<tr style="border-bottom: 1px solid #f3f4f6;">
+              ${
+                service
+                  ? `<tr style="border-bottom: 1px solid #f3f4f6;">
                 <td style="padding: 10px 0; color: #6b7280; font-size: 14px;">Service</td>
                 <td style="padding: 10px 0; font-weight: 600; color: #111827;">${service}</td>
-              </tr>` : ""}
+              </tr>`
+                  : ""
+              }
               <tr>
                 <td style="padding: 10px 0; color: #6b7280; font-size: 14px; vertical-align: top;">Message</td>
                 <td style="padding: 10px 0; color: #374151; line-height: 1.6;">${message.replace(/\n/g, "<br/>")}</td>
@@ -63,10 +70,28 @@ export async function POST(req: NextRequest) {
 
     if (error) {
       console.error("Resend error:", error);
+      const resendMessage =
+        typeof error === "object" && error !== null && "message" in error
+          ? String((error as { message: string }).message)
+          : "";
+
+      if (
+        resendMessage.includes("domain is not verified") ||
+        resendMessage.includes("verify a domain")
+      ) {
+        return NextResponse.json(
+          {
+            error:
+              "Email could not be sent: verify complybridge.in at resend.com/domains, or use Resend test settings in .env.local.",
+          },
+          { status: 503 }
+        );
+      }
+
       return NextResponse.json({ error: "Failed to send email. Please try again." }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, id: data?.id });
   } catch (err) {
     console.error("Contact API error:", err);
     return NextResponse.json({ error: "Internal server error." }, { status: 500 });

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, Phone } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import ContactCtaButtons from "@/components/ContactCtaButtons";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -47,14 +48,7 @@ export default function OtherServicesPage() {
         <div className="bg-[#112740] text-white rounded-2xl p-8 text-center">
           <h2 className="text-2xl font-bold mb-3">Looking for a Custom Solution?</h2>
           <p className="text-gray-300 mb-6">Our team provides tailored legal and compliance solutions. Talk to an expert today.</p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contact" className="bg-green-600 hover:bg-green-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors inline-flex items-center gap-2">
-              Contact Us <ArrowRight size={16} />
-            </Link>
-            <a href="tel:9149023243" className="bg-white/10 border border-white/20 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-xl transition-colors inline-flex items-center gap-2">
-              <Phone size={16} /> 9149023243
-            </a>
-          </div>
+          <ContactCtaButtons message="Hi ComplyBridge, I need help with other compliance services." />
         </div>
       </section>
     </div>

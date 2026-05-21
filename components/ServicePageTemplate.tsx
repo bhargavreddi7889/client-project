@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { CheckCircle2, ArrowRight, Phone, FileText, AlertCircle, HelpCircle } from "lucide-react";
+import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/contact";
+import WhatsAppLink from "@/components/WhatsAppLink";
 
 interface Step {
   title: string;
@@ -31,7 +33,7 @@ export default function ServicePageTemplate({
   price, category, categoryHref, timeframe, govtFee,
 }: ServicePageProps) {
   return (
-    <div className="bg-white">
+    <div className="bg-white overflow-x-hidden">
       {/* Breadcrumb + Hero */}
       <section className="bg-gradient-to-br from-[#112740] to-[#1a3c5e] text-white py-12 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -50,13 +52,20 @@ export default function ServicePageTemplate({
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3">{title}</h1>
               <p className="text-green-300 text-base sm:text-lg mb-4">{subtitle}</p>
               <p className="text-gray-300 leading-relaxed text-sm sm:text-base">{description}</p>
-              <div className="flex flex-col sm:flex-row gap-3 mt-6">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-6">
                 <Link href="/contact" className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors">
                   Get Started <ArrowRight size={16} />
                 </Link>
-                <a href="tel:9149023243" className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/20 hover:bg-white/20 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors">
-                  <Phone size={16} /> 9149023243
+                <a href={PHONE_TEL} className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/20 hover:bg-white/20 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors">
+                  <Phone size={16} /> {PHONE_DISPLAY}
                 </a>
+                <WhatsAppLink
+                  variant="outline-light"
+                  message={`Hi ComplyBridge, I am interested in ${title}.`}
+                  className="px-5 py-2.5"
+                >
+                  WhatsApp
+                </WhatsAppLink>
               </div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6">
@@ -97,8 +106,8 @@ export default function ServicePageTemplate({
       </section>
 
       {/* Benefits */}
-      <section className="py-14 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
+      <section className="py-10 sm:py-14 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2 className="text-2xl lg:text-3xl font-bold text-[#112740] mb-8">Key Benefits of {title}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {keyBenefits.map((benefit) => (
@@ -112,8 +121,8 @@ export default function ServicePageTemplate({
       </section>
 
       {/* Documents Required */}
-      <section className="py-14">
-        <div className="max-w-7xl mx-auto px-4">
+      <section className="py-10 sm:py-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
               <FileText size={20} className="text-green-600" />
@@ -134,8 +143,8 @@ export default function ServicePageTemplate({
       </section>
 
       {/* Process */}
-      <section className="py-14 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
+      <section className="py-10 sm:py-14 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
               <AlertCircle size={20} className="text-green-600" />
@@ -158,7 +167,7 @@ export default function ServicePageTemplate({
 
       {/* FAQ */}
       <section className="py-14">
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
               <HelpCircle size={20} className="text-green-600" />
@@ -181,13 +190,20 @@ export default function ServicePageTemplate({
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
           <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3">Ready to Get Your {title}?</h2>
           <p className="text-gray-300 mb-6 text-sm sm:text-base">Our experts are ready to guide you through the entire process. Get a free consultation today.</p>
-          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
             <Link href="/contact" className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
               Contact Us <ArrowRight size={16} />
             </Link>
-            <a href="tel:9149023243" className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/20 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
-              <Phone size={16} /> Call: 9149023243
+            <a href={PHONE_TEL} className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/20 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
+              <Phone size={16} /> Call: {PHONE_DISPLAY}
             </a>
+            <WhatsAppLink
+              variant="outline-light"
+              message={`Hi ComplyBridge, I would like help with ${title}.`}
+              className="px-6 py-3"
+            >
+              WhatsApp
+            </WhatsAppLink>
           </div>
         </div>
       </section>

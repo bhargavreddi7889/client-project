@@ -1,11 +1,12 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
   Building2, Landmark, Heart, FileText, ShieldCheck, Star,
   ArrowRight, CheckCircle2, Phone, ClipboardList, Award,
   Users, TrendingUp, Clock, BadgeCheck, ChevronRight,
 } from "lucide-react";
 import { navSections } from "@/lib/nav-data";
+import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/contact";
+import WhatsAppLink from "@/components/WhatsAppLink";
 
 const services = [
   { icon: Building2, title: "Company Registration", desc: "Incorporate your Private Limited, OPC, or Public Ltd company seamlessly.", href: "/registration/company", color: "bg-blue-50 text-blue-700" },
@@ -96,10 +97,13 @@ export default function HomePage() {
                   ))}
                 </div>
                 <div className="mt-6 p-4 bg-green-600/20 border border-green-500/30 rounded-xl">
-                  <p className="text-sm text-green-300 font-medium mb-1">Need help choosing?</p>
-                  <a href="tel:9149023243" className="flex items-center gap-2 text-white font-semibold text-lg hover:text-green-300 transition-colors">
-                    <Phone size={18} /> 9149023243
+                  <p className="text-sm text-green-300 font-medium mb-2">Need help choosing?</p>
+                  <a href={PHONE_TEL} className="flex items-center gap-2 text-white font-semibold text-lg hover:text-green-300 transition-colors mb-2">
+                    <Phone size={18} /> {PHONE_DISPLAY}
                   </a>
+                  <WhatsAppLink variant="link-light" className="text-white font-semibold text-base hover:text-green-300">
+                    Chat on WhatsApp
+                  </WhatsAppLink>
                 </div>
               </div>
             </div>
@@ -278,10 +282,13 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Ready to Get Started?</h2>
           <p className="text-green-100 text-base sm:text-lg mb-8">Talk to our experts today and get a free consultation for your compliance needs.</p>
-          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-            <Link href="/contact" className="inline-flex items-center justify-center gap-2 bg-white text-green-700 font-bold px-6 sm:px-8 py-3 rounded-xl hover:bg-green-50 transition-colors shadow-lg">
-              <Phone size={18} /> Call Now: 9149023243
-            </Link>
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
+            <a href={PHONE_TEL} className="inline-flex items-center justify-center gap-2 bg-white text-green-700 font-bold px-6 sm:px-8 py-3 rounded-xl hover:bg-green-50 transition-colors shadow-lg">
+              <Phone size={18} /> Call Now: {PHONE_DISPLAY}
+            </a>
+            <WhatsAppLink variant="button" className="px-6 sm:px-8 py-3 shadow-lg">
+              WhatsApp Us
+            </WhatsAppLink>
             <Link href="/packages/complete-value-package" className="inline-flex items-center justify-center gap-2 bg-white/20 border border-white/40 text-white font-semibold px-6 sm:px-8 py-3 rounded-xl hover:bg-white/30 transition-colors">
               View Packages <ArrowRight size={18} />
             </Link>

@@ -8,9 +8,15 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://complybridge.in"),
   title: { default: "ComplyBridge – Compliance First", template: "%s | ComplyBridge" },
   description: "ComplyBridge provides expert compliance, legal registration, licensing, and tax filing services across India. Your trusted partner for GST, ITR, company registration, and more.",
   keywords: "company registration, GST registration, ITR filing, trademark, MSME, compliance, legal services, India",
+  icons: {
+    icon: [{ url: "/logo.png", type: "image/png" }],
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "ComplyBridge – Compliance First",
     description: "Expert compliance and legal services across India.",
@@ -18,12 +24,13 @@ export const metadata: Metadata = {
     siteName: "ComplyBridge",
     locale: "en_IN",
     type: "website",
+    images: [{ url: "/logo.png", alt: "ComplyBridge" }],
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" data-scroll-behavior="smooth">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Navbar />
         <main className="min-h-screen">{children}</main>

@@ -1,5 +1,7 @@
 import ContactForm from "@/components/ContactForm";
+import WhatsAppLink from "@/components/WhatsAppLink";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { PHONE_DISPLAY, PHONE_TEL, EMAIL, EMAIL_MAILTO } from "@/lib/contact";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,8 +10,8 @@ export const metadata: Metadata = {
 };
 
 const contactDetails = [
-  { icon: Phone, label: "Phone", value: "9149023243", href: "tel:9149023243" },
-  { icon: Mail, label: "Email", value: "info@complybridge.in", href: "mailto:info@complybridge.in" },
+  { icon: Phone, label: "Phone", value: PHONE_DISPLAY, href: PHONE_TEL },
+  { icon: Mail, label: "Email", value: EMAIL, href: EMAIL_MAILTO },
   { icon: MapPin, label: "Address", value: "I-79 Basement, Lajpat Nagar-2, New Delhi – 110024", href: "#" },
   { icon: Clock, label: "Business Hours", value: "Mon – Sat: 10:00 AM – 7:00 PM", href: "#" },
 ];
@@ -17,16 +19,16 @@ const contactDetails = [
 export default function ContactPage() {
   return (
     <div>
-      <section className="bg-gradient-to-br from-[#112740] to-[#1a3c5e] text-white py-14">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold mb-3">Get in Touch</h1>
+      <section className="bg-gradient-to-br from-[#112740] to-[#1a3c5e] text-white py-10 sm:py-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3">Get in Touch</h1>
           <p className="text-gray-300 max-w-xl mx-auto">Have a compliance question? Need a free consultation? Our expert team is ready to help you navigate any legal or regulatory challenge.</p>
         </div>
       </section>
 
-      <section className="py-14">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid lg:grid-cols-3 gap-10">
+      <section className="py-8 sm:py-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
             {/* Contact Info */}
             <div>
               <h2 className="text-xl font-bold text-[#112740] mb-6">Contact Information</h2>
@@ -51,9 +53,14 @@ export default function ContactPage() {
               <div className="mt-8 bg-green-50 border border-green-200 rounded-2xl p-5">
                 <h3 className="font-bold text-[#112740] mb-2">Free Consultation</h3>
                 <p className="text-gray-600 text-sm mb-3">Not sure which service you need? Talk to our experts for a free 30-minute consultation.</p>
-                <a href="tel:9149023243" className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors">
-                  <Phone size={14} /> Call Now
-                </a>
+                <div className="flex flex-col sm:flex-row flex-wrap gap-2">
+                  <a href={PHONE_TEL} className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors">
+                    <Phone size={14} /> Call Now
+                  </a>
+                  <WhatsAppLink variant="button" className="text-sm px-4 py-2">
+                    WhatsApp
+                  </WhatsAppLink>
+                </div>
               </div>
 
               <div className="mt-5 rounded-2xl overflow-hidden h-48">

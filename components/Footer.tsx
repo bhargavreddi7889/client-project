@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { navSections } from "@/lib/nav-data";
+import { PHONE_DISPLAY, PHONE_TEL, EMAIL, EMAIL_MAILTO } from "@/lib/contact";
+import WhatsAppLink from "@/components/WhatsAppLink";
 
 export default function Footer() {
   return (
@@ -10,7 +12,17 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Image src="/logo.png" alt="ComplyBridge" width={160} height={48} className="h-12 w-auto object-contain brightness-0 invert mb-4" />
+            <Link href="/" className="inline-block mb-4 rounded-lg bg-white px-3 py-2 shadow-sm">
+              <span className="relative block h-14 w-[180px]">
+                <Image
+                  src="/logo.png"
+                  alt="ComplyBridge"
+                  fill
+                  sizes="180px"
+                  className="object-contain object-left"
+                />
+              </span>
+            </Link>
             <p className="text-sm leading-relaxed text-gray-400 mb-4">
               ComplyBridge helps businesses navigate complex compliance requirements with ease. Your trusted partner for all legal, tax, and regulatory needs.
             </p>
@@ -75,12 +87,19 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-sm">
                 <Phone size={15} className="text-green-400 mt-0.5 shrink-0" />
-                <a href="tel:9149023243" className="hover:text-green-400 transition-colors">9149023243</a>
+                <div className="flex flex-col gap-1">
+                  <a href={PHONE_TEL} className="hover:text-green-400 transition-colors">
+                    {PHONE_DISPLAY}
+                  </a>
+                  <WhatsAppLink variant="link-light" className="text-sm" iconSize={14}>
+                    WhatsApp
+                  </WhatsAppLink>
+                </div>
               </li>
               <li className="flex items-start gap-2 text-sm">
                 <Mail size={15} className="text-green-400 mt-0.5 shrink-0" />
-                <a href="mailto:info@complybridge.in" className="hover:text-green-400 transition-colors break-all">
-                  info@complybridge.in
+                <a href={EMAIL_MAILTO} className="hover:text-green-400 transition-colors break-all">
+                  {EMAIL}
                 </a>
               </li>
               <li className="flex items-start gap-2 text-sm">

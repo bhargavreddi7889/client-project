@@ -1,50 +1,56 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown, Phone, Mail } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Menu, X, Phone, Mail } from "lucide-react";
 import { navSections, topLinks } from "@/lib/nav-data";
+import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/contact";
+import WhatsAppLink from "@/components/WhatsAppLink";
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string | null>(null);
-  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pathname = usePathname();
+  const [mobileMenuPath, setMobileMenuPath] = useState<string | null>(null);
 
-  const handleMouseEnter = (label: string) => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    setActiveSection(label);
+  const isMobileMenuOpen = mobileMenuPath !== null && mobileMenuPath === pathname;
+
+  const toggleMobileMenu = () => {
+    setMobileMenuPath(isMobileMenuOpen ? null : pathname);
   };
 
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => setActiveSection(null), 150);
-  };
+  const closeMobileMenu = () => setMobileMenuPath(null);
+
+  const isSectionActive = (href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`);
 
   useEffect(() => {
-    // Lock body scroll when mobile menu is open
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [mobileOpen]);
-
-  useEffect(() => {
-    return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
-  }, []);
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <header className="w-full sticky top-0 z-50">
-      {/* Top info bar — hidden on mobile */}
       <div className="hidden sm:block bg-[#0d1f33] text-white text-xs py-2 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-          <div className="flex items-center gap-5">
-            <a href="tel:9149023243" className="flex items-center gap-1.5 hover:text-green-400 transition-colors">
-              <Phone size={12} /> 9149023243
+          <div className="flex items-center gap-3 lg:gap-5 min-w-0">
+            <a href={PHONE_TEL} className="flex items-center gap-1.5 hover:text-green-400 transition-colors shrink-0">
+              <Phone size={12} /> {PHONE_DISPLAY}
             </a>
-            <a href="mailto:info@complybridge.in" className="flex items-center gap-1.5 hover:text-green-400 transition-colors">
-              <Mail size={12} /> info@complybridge.in
+            <WhatsAppLink variant="link-light" className="text-xs shrink-0" iconSize={14}>
+              WhatsApp
+            </WhatsAppLink>
+            <a
+              href="mailto:info@complybridge.in"
+              className="flex items-center gap-1.5 hover:text-green-400 transition-colors truncate"
+            >
+              <Mail size={12} className="shrink-0" />
+              <span className="truncate">info@complybridge.in</span>
             </a>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 shrink-0">
             {topLinks.map((l) => (
               <Link key={l.href} href={l.href} className="hover:text-green-400 transition-colors">
                 {l.label}
@@ -54,143 +60,93 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Main navbar */}
       <nav className="bg-white shadow-md border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between" style={{ height: "72px" }}>
-
-          {/* Logo */}
-          <Link href="/" className="flex items-center shrink-0 py-2" onClick={() => setMobileOpen(false)}>
-            <Image
-              src="/logo.png"
-              alt="ComplyBridge"
-              width={150}
-              height={44}
-              className="w-auto object-contain"
-              style={{ height: "44px" }}
-              priority
-            />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-[64px] sm:h-[72px]">
+          <Link href="/" className="flex items-center shrink-0 py-2" onClick={closeMobileMenu}>
+            <span className="relative block h-9 w-[120px] sm:h-11 sm:w-[150px]">
+              <Image
+                src="/logo.png"
+                alt="ComplyBridge"
+                fill
+                sizes="(max-width: 640px) 120px, 150px"
+                className="object-contain object-left"
+                priority
+              />
+            </span>
           </Link>
 
-          {/* Desktop nav links */}
           <div className="hidden lg:flex items-center gap-0.5">
             {navSections.map((section) => (
-              <div
+              <Link
                 key={section.label}
-                className="relative"
-                onMouseEnter={() => handleMouseEnter(section.label)}
-                onMouseLeave={handleMouseLeave}
+                href={section.href}
+                className={`px-2.5 xl:px-3 py-2 text-sm font-medium rounded-md transition-colors whitespace-nowrap ${
+                  isSectionActive(section.href)
+                    ? "text-green-600 bg-green-50"
+                    : "text-gray-700 hover:text-green-600 hover:bg-green-50"
+                }`}
               >
-                <button
-                  className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                    activeSection === section.label
-                      ? "text-green-600 bg-green-50"
-                      : "text-gray-700 hover:text-green-600 hover:bg-green-50"
-                  }`}
-                >
-                  {section.label}
-                  <ChevronDown
-                    size={14}
-                    className={`transition-transform duration-200 ${activeSection === section.label ? "rotate-180" : ""}`}
-                  />
-                </button>
-
-                {activeSection === section.label && (
-                  <div
-                    className="absolute top-full left-0 mt-1 bg-white shadow-xl border border-gray-100 rounded-xl min-w-[220px] py-2 z-50"
-                    onMouseEnter={() => handleMouseEnter(section.label)}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    {section.items.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => setActiveSection(null)}
-                        className="block px-4 py-2.5 text-sm text-gray-700 hover:text-green-600 hover:bg-green-50 transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
+                {section.label}
+              </Link>
             ))}
           </div>
 
-          {/* CTA + Mobile toggle */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/contact"
-              className="hidden sm:inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm"
+              className="hidden sm:inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl transition-colors shadow-sm"
             >
               Free Consultation
             </Link>
             <button
+              type="button"
               className="lg:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
-              onClick={() => setMobileOpen(!mobileOpen)}
+              onClick={toggleMobileMenu}
               aria-label="Toggle menu"
+              aria-expanded={isMobileMenuOpen}
             >
-              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile menu — full-screen overlay */}
-        {mobileOpen && (
-          <div className="lg:hidden fixed inset-x-0 bottom-0 bg-white z-40 overflow-y-auto flex flex-col" style={{ top: "72px" }}>
-            {/* Contact strip at top */}
-            <div className="bg-[#112740] text-white px-4 py-3 flex items-center gap-4 text-sm sm:hidden">
-              <a href="tel:9149023243" className="flex items-center gap-1.5">
-                <Phone size={13} className="text-green-400" /> 9149023243
+        {isMobileMenuOpen && (
+          <div className="lg:hidden fixed inset-x-0 bottom-0 bg-white z-40 overflow-y-auto flex flex-col top-[64px] sm:top-[72px]">
+            <div className="bg-[#112740] text-white px-4 py-3 flex flex-col gap-2 text-sm sm:hidden">
+              <a href={PHONE_TEL} className="flex items-center gap-1.5">
+                <Phone size={13} className="text-green-400 shrink-0" /> {PHONE_DISPLAY}
               </a>
-              <a href="mailto:info@complybridge.in" className="flex items-center gap-1.5">
-                <Mail size={13} className="text-green-400" /> info@complybridge.in
+              <WhatsAppLink variant="link-light" className="text-sm" iconSize={14}>
+                Chat on WhatsApp
+              </WhatsAppLink>
+              <a href="mailto:info@complybridge.in" className="flex items-center gap-1.5 break-all">
+                <Mail size={13} className="text-green-400 shrink-0" /> info@complybridge.in
               </a>
             </div>
 
-            {/* Nav sections */}
-            <div className="flex-1">
+            <div className="flex-1 pb-2">
               {navSections.map((section) => (
-                <div key={section.label} className="border-b border-gray-100">
-                  <button
-                    className="w-full flex items-center justify-between px-5 py-4 text-base font-semibold text-gray-800 hover:bg-gray-50 transition-colors"
-                    onClick={() =>
-                      setMobileExpanded(mobileExpanded === section.label ? null : section.label)
-                    }
-                  >
-                    {section.label}
-                    <ChevronDown
-                      size={18}
-                      className={`text-gray-400 transition-transform duration-200 ${
-                        mobileExpanded === section.label ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                  {mobileExpanded === section.label && (
-                    <div className="bg-gray-50 border-t border-gray-100">
-                      {section.items.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setMobileOpen(false)}
-                          className="flex items-center gap-2 px-7 py-3 text-sm text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors border-b border-gray-100 last:border-0"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0" />
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <Link
+                  key={section.label}
+                  href={section.href}
+                  onClick={closeMobileMenu}
+                  className={`block px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base font-semibold border-b border-gray-100 transition-colors ${
+                    isSectionActive(section.href)
+                      ? "text-green-600 bg-green-50"
+                      : "text-gray-800 hover:bg-gray-50"
+                  }`}
+                >
+                  {section.label}
+                </Link>
               ))}
 
-              {/* Quick links */}
               <div className="border-b border-gray-100">
                 {topLinks.map((l) => (
                   <Link
                     key={l.href}
                     href={l.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="block px-5 py-3.5 text-sm font-medium text-gray-700 hover:text-green-600 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0"
+                    onClick={closeMobileMenu}
+                    className="block px-4 sm:px-5 py-3.5 text-sm font-medium text-gray-700 hover:text-green-600 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0"
                   >
                     {l.label}
                   </Link>
@@ -198,21 +154,25 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Sticky CTA at bottom */}
-            <div className="p-4 bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+            <div className="p-4 bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] safe-area-pb">
               <Link
                 href="/contact"
-                onClick={() => setMobileOpen(false)}
+                onClick={closeMobileMenu}
                 className="block w-full text-center bg-green-600 hover:bg-green-700 text-white py-3.5 rounded-xl text-base font-semibold transition-colors"
               >
                 Get Free Consultation
               </Link>
-              <a
-                href="tel:9149023243"
-                className="flex items-center justify-center gap-2 mt-3 text-sm text-gray-600 hover:text-green-600 transition-colors"
-              >
-                <Phone size={15} className="text-green-500" /> Call: 9149023243
-              </a>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mt-3">
+                <a
+                  href={PHONE_TEL}
+                  className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-green-600 transition-colors"
+                >
+                  <Phone size={15} className="text-green-500" /> Call: {PHONE_DISPLAY}
+                </a>
+                <WhatsAppLink variant="link" className="text-sm">
+                  WhatsApp
+                </WhatsAppLink>
+              </div>
             </div>
           </div>
         )}

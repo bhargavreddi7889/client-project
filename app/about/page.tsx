@@ -1,6 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
 import { CheckCircle2, Users, Award, Target, Heart, ArrowRight, MapPin, Phone, Mail } from "lucide-react";
+import { PHONE_DISPLAY, PHONE_TEL, EMAIL, EMAIL_MAILTO } from "@/lib/contact";
+import WhatsAppLink from "@/components/WhatsAppLink";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -157,16 +158,30 @@ export default function AboutPage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone size={20} className="text-green-600 shrink-0" />
-                  <a href="tel:9149023243" className="text-gray-700 hover:text-green-600 font-medium">9149023243</a>
+                  <a href={PHONE_TEL} className="text-gray-700 hover:text-green-600 font-medium">
+                    {PHONE_DISPLAY}
+                  </a>
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail size={20} className="text-green-600 shrink-0" />
-                  <a href="mailto:info@complybridge.in" className="text-gray-700 hover:text-green-600">info@complybridge.in</a>
+                  <a href={EMAIL_MAILTO} className="text-gray-700 hover:text-green-600">
+                    {EMAIL}
+                  </a>
+                </div>
+                <div className="flex items-center gap-3">
+                  <WhatsAppLink variant="link" className="text-base">
+                    Chat on WhatsApp
+                  </WhatsAppLink>
                 </div>
               </div>
-              <Link href="/contact" className="inline-flex items-center gap-2 mt-6 bg-[#112740] hover:bg-[#1a3c5e] text-white font-semibold px-6 py-3 rounded-xl transition-colors">
-                Send us a Message <ArrowRight size={16} />
-              </Link>
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-6">
+                <Link href="/contact" className="inline-flex items-center justify-center gap-2 bg-[#112740] hover:bg-[#1a3c5e] text-white font-semibold px-6 py-3 rounded-xl transition-colors">
+                  Send us a Message <ArrowRight size={16} />
+                </Link>
+                <WhatsAppLink variant="button" className="px-6 py-3">
+                  WhatsApp
+                </WhatsAppLink>
+              </div>
             </div>
             <div className="bg-gray-100 rounded-2xl overflow-hidden h-64">
               <iframe
