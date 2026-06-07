@@ -102,7 +102,7 @@ Your continued use of our services after any changes constitutes your acceptance
 ComplyBridge
 I-79 Basement, Lajpat Nagar-2, New Delhi – 110024, India
 Email: info@complybridge.in
-Phone: 9149023243
+Phone: 9310396871
 
 We will respond to your inquiry within 30 working days.`,
   },
